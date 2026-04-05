@@ -1,0 +1,17 @@
+# Lixo que vier do python
+__pycache__/
+*.pyc
+
+# Banco de Dados, teria que ser louco pra vazar
+*.db
+
+# 0 lógica vazar a .env tbm
+venv/
+.env
+
+# Node, me disseram que não era pra ir junto
+node_modules/
+
+# Sistema
+.DS_Store
+Thumbs.db
