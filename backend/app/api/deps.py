@@ -2,9 +2,9 @@ from app.db.session import SessionLocal
 from fastapi import Depends, HTTPException
 from jose import jwt, JWTError
 from app.core.config import settings
+from fastapi.security import OAuth2PasswordBearer
 
-
-# 🔗 Conexão com banco
+# 🔗 Banco de dados
 def get_db():
     db = SessionLocal()
     try:
@@ -12,9 +12,11 @@ def get_db():
     finally:
         db.close()
 
+# 🔐 OAuth2 (ativa botão Authorize)
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
-# 🔐 Usuário autenticado
-def get_current_user(token: str = Depends(lambda: None)):
+# 🔒 Usuário autenticado
+def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         username = payload.get("sub")
