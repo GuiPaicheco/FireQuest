@@ -4,7 +4,7 @@ from jose import jwt, JWTError
 from app.core.config import settings
 from fastapi.security import OAuth2PasswordBearer
 
-# 🔗 Banco de dados
+# Banco de dados
 def get_db():
     db = SessionLocal()
     try:
@@ -12,10 +12,10 @@ def get_db():
     finally:
         db.close()
 
-# 🔐 OAuth2 (ativa botão Authorize)
+# OAuth2
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
-# 🔒 Usuário autenticado
+# Usuário autenticado
 def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])

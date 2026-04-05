@@ -57,21 +57,21 @@ def complete_mission(
     if mission.completed:
         raise HTTPException(status_code=400, detail="Missão já concluída")
 
-    # 🔹 pega usuário primeiro (IMPORTANTE)
+    # pega usuário primeiro
     user = db.query(User).filter(User.username == current_user).first()
 
     if not user:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
 
-    # 🔒 valida dono da missão
+    # valida dono da missão
     if mission.owner_id != user.id:
         raise HTTPException(status_code=403, detail="Acesso negado")
 
-    # ✅ marca como concluída
+    # arca como concluída
     mission.completed = True
     mission.completed_at = datetime.utcnow()
 
-    # 🎯 cálculo XP avançado
+    # cálculo do xp
     xp_final = mission.xp
 
     if mission.due_date and datetime.utcnow() > mission.due_date:

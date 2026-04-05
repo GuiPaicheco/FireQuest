@@ -4,8 +4,6 @@ from app.db.session import engine
 from app.db.base import Base
 from app.models import goal
 from app.core.exception_handler import global_exception_handler
-
-# 👇 IMPORTANTE (carrega os models)
 from app.models import user, mission
 
 app = FastAPI(title="FireQuest API")
