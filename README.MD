@@ -261,7 +261,8 @@ Mobile   → API → Banco
 ## 💡 Status
 
 🟢 Backend finalizado
-🟡 Frontend em desenvolvimento
+🟡 Mobile em desenvolvimento
+🔴 Frontend a desenvolver
 
 ---
 
