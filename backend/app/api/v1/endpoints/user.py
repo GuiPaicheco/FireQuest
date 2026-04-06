@@ -5,9 +5,9 @@ from app.models.user import User
 from app.api.deps import get_db, get_current_user
 from app.core.security import hash_password
 from sqlalchemy.exc import IntegrityError
+from app.core.response import success_response
 
 router = APIRouter()
-
 
 @router.post("/", response_model=UserResponse)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
@@ -28,10 +28,13 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Usuário ou email já existe")
     return db_user
 
-
 @router.get("/me")
-def read_me(current_user: str = Depends(get_current_user)):
-    return {"user": current_user}
+def read_me(current_user: User = Depends(get_current_user)):
+    return success_response({
+        "id": current_user.id,
+        "username": current_user.username,
+        "xp": current_user.xp
+    })
 
 @router.get("/ranking")
 def get_ranking(db: Session = Depends(get_db)):
@@ -48,4 +51,4 @@ def get_ranking(db: Session = Depends(get_db)):
         })
         position += 1
 
-    return ranking
+    return success_response(ranking)
